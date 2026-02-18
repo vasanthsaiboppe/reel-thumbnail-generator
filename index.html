@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reel Thumbnail Generator</title>
+  <style>
+    body { font-family: Arial; padding: 40px; }
+    input, button { padding: 10px; margin: 5px; }
+    #preview {
+      width: 270px;
+      height: 480px;
+      border: 2px solid black;
+      margin-top: 20px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Instagram Reel Thumbnail Generator</h2>
+
+<input id="title" placeholder="Enter Reel Title">
+<input id="theme" placeholder="Enter Theme">
+<button onclick="generate()">Generate</button>
+
+<pre id="output"></pre>
+
+<script>
+async function generate() {
+  const title = document.getElementById("title").value;
+  const theme = document.getElementById("theme").value;
+
+  const res = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title, theme })
+  });
+
+  const data = await res.json();
+  document.getElementById("output").innerText = data.result;
+}
+</script>
+
+</body>
+</html>
